@@ -1,0 +1,73 @@
+    x   import re
+
+def calculate_strength(password):
+    length_score = len(password)
+    complexity_score = 0
+    unique_score = 0
+    
+    # Complexity checks
+    if re.search(r'[a-z]', password):
+        complexity_score += 1
+    if re.search(r'[A-Z]', password):
+        complexity_score += 1
+    if re.search(r'[0-9]', password):
+        complexity_score += 1
+    if re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+        complexity_score += 1
+
+    # Common patterns (basic check)
+    common_passwords = ['123456', 'password', '123456789', '12345678', '12345', '1234567', 'qwerty', 'abcdef', 'abc123']
+    if password in common_passwords:
+        unique_score -= 1
+    else:
+        unique_score += 1
+
+    # Length scoring (arbitrary example scaling)
+    if length_score < 8:
+        length_score = 1
+    elif length_score <= 12:
+        length_score = 2
+    else:
+        length_score = 3
+
+    # Aggregate score (scale as needed)
+    total_score = length_score + complexity_score + unique_score
+
+    return {
+        'length_score': length_score,
+        'complexity_score': complexity_score,
+        'unique_score': unique_score,
+        'total_score': total_score,
+        'strength': classify_strength(total_score)
+    }
+
+def classify_strength(score):
+    if score <= 2:
+        return 'Weak'
+    elif score <= 4:
+        return 'Moderate'
+    else:
+        return 'Strong'
+
+def main():
+    print("Password Strength Checker")
+    print("========================")
+    password = input("Enter your password: ")
+    
+    result = calculate_strength(password)
+    
+    print(f"\nPassword strength: {result['strength']}")
+    print(f"Length score: {result['length_score']}")
+    print(f"Complexity score: {result['complexity_score']}")
+    print(f"Unique score: {result['unique_score']}")
+    print(f"Total score: {result['total_score']}")
+    
+    if result['strength'] == 'Weak':
+        print("Try to increase your password length, add more complexity, and avoid common passwords.")
+    elif result['strength'] == 'Moderate':
+        print("Your password is decent, but adding more complexity or length could make it stronger.")
+    else:
+        print("Your password is strong!")
+
+if __name__ == "__main__":
+    main()
