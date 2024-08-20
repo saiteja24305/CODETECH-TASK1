@@ -11,6 +11,7 @@
 
 #### PROJECT :  Develop a tool to assess the strength of passwords entered by users. Implement algorithms to analyze factors such as length, complexity, and uniqueness to provide feedback on password strength.
 
+![image](https://github.com/user-attachments/assets/38807cf2-8775-4a49-928b-7bcaa2c4931c)
 
 #### OBJECTIVE
 The objective of this project is to develop a software tool that evaluates the strength of passwords entered by users.
